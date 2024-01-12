@@ -25,3 +25,15 @@ export const createComment = asyncHandler(async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+export const getAllComments = asyncHandler(async (req, res) => {
+  try {
+    // Fetch all comments
+    const comments = await userComment.find();
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});

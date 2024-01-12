@@ -1,6 +1,7 @@
 import userProfile from '../models/userProfile.js';
+import asyncHandler from 'express-async-handler';
 
-export async function createProfile(req, res) {
+export const createProfile = asyncHandler(async (req, res) => {
   try {
     const { id, name, description, mbti, enneagram, variant, tritype, socionics, sloan, psyche, image } = req.body;
     
@@ -25,9 +26,9 @@ export async function createProfile(req, res) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+});
 
-export async function getProfile(req, res) {
+export const getProfile = asyncHandler(async (req, res) => {
     try {
       const profileId = req.params.id; 
   
@@ -43,5 +44,5 @@ export async function getProfile(req, res) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  }
+  });
   

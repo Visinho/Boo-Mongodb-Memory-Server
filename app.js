@@ -3,7 +3,8 @@
 import express from 'express';
 import connect from './database/connection.js';
 import userProfile from './routes/userProfile.js';
-import userComment from "./routes/userComment.js"
+import userComment from "./routes/userComment.js";
+import userLike from "./routes/userLike.js";
 const app = express();
 const port =  process.env.PORT || 3001;
 
@@ -13,8 +14,9 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 
 // routes
-app.use("/profile/", userProfile)
-app.use("/comment/", userComment)
+app.use("/profile", userProfile)
+app.use("/comment", userComment)
+app.use("/like", userLike)
 
 
 // start server
