@@ -2,15 +2,17 @@
 
 import express from 'express';
 import connect from './database/connection.js';
+import userProfile from './routes/userProfile.js';
 const app = express();
 const port =  process.env.PORT || 3001;
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// routes
-// app.use('/', require('./routes/profile')());
 app.use(express.json());
+
+// routes
+app.use("/profile/", userProfile)
 
 // start server
 connect().then(() => {
