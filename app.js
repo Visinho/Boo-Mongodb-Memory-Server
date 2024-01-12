@@ -3,6 +3,7 @@
 import express from 'express';
 import connect from './database/connection.js';
 import userProfile from './routes/userProfile.js';
+import userComment from "./routes/userComment.js"
 const app = express();
 const port =  process.env.PORT || 3001;
 
@@ -13,6 +14,8 @@ app.use(express.json());
 
 // routes
 app.use("/profile/", userProfile)
+app.use("/comment/", userComment)
+
 
 // start server
 connect().then(() => {
