@@ -1,33 +1,6 @@
-// import { Schema, model } from 'mongoose';
-
-// const userProfileSchema = new Schema({
-//   id: { type: String, required: true },
-//   name: { type: String, required: true },
-//   description: { type: String },
-//   mbti: [{
-//     type: String
-//   }],
-//   enneagram: [{
-//     type: String
-//   }],
-//   zodiac: [{
-//     type: String
-//   }],
-//   variant: { type: String},
-//   socionics: { type: String},
-//   sloan: { type: String},
-//   psyche: { type: String},
-//   image: { type: String}
-// });
-
-// const userProfile = model('Profile', userProfileSchema);
-
-// export default userProfile;
-
 import { Schema, model } from 'mongoose';
 
 const userProfileSchema = new Schema({
-  id: { type: String, required: true },
   name: { type: String, required: true },
   description: { type: String },
   mbti: [{
@@ -40,6 +13,7 @@ const userProfileSchema = new Schema({
     type: String,
   }],
   variant: { type: String },
+  tritype: { type: Number },
   socionics: { type: String },
   sloan: { type: String },
   psyche: { type: String },
@@ -62,7 +36,7 @@ const userProfileSchema = new Schema({
   receivedVotes: [{
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'Profile', // Adjust based on the model name
+      ref: 'Profile', 
       required: true,
     },
     userName: {

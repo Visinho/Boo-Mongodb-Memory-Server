@@ -38,7 +38,7 @@ export const getAllComments = asyncHandler(async (req, res) => {
   }
 });
 
-export const getCommentsBySort = asyncHandler(async (req, res) => {
+export const getCommentsByRecent = asyncHandler(async (req, res) => {
   try {
     const sortBy = req.query.sortBy;
 
@@ -47,6 +47,27 @@ export const getCommentsBySort = asyncHandler(async (req, res) => {
     if (sortBy === 'recent') {
       // Fetch comments sorted by the creation date in descending order (most recent first)
       comments = await userComment.find().sort({ createdAt: -1 });
+    } else {
+      // Fetch comments without sorting
+      comments = await userComment.find();
+    }
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+export const getCommentsByLikes = asyncHandler(async (req, res) => {
+  try {
+    const sortBy = req.query.sortBy;
+
+    let comments;
+
+    if (sortBy === 'likes') {
+      // Fetch comments sorted by the number of likes in descending order
+      comments = await userComment.find().sort({ likes: -1 });
     } else {
       // Fetch comments without sorting
       comments = await userComment.find();
