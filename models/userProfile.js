@@ -4,8 +4,15 @@ const userProfileSchema = new Schema({
   id: { type: String, required: true },
   name: { type: String, required: true },
   description: { type: String },
-  mbti: { type: String},
-  enneagram: { type: String},
+  mbti: [{
+    type: String
+  }],
+  enneagram: [{
+    type: String
+  }],
+  zodiac: [{
+    type: String
+  }],
   variant: { type: String},
   socionics: { type: String},
   sloan: { type: String},

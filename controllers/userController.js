@@ -45,4 +45,37 @@ export const getProfile = asyncHandler(async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  export const updateUserProfile = asyncHandler(async (req, res) => { 
+    try {
+      const { targetUserId, userId } = req.params;
+      const { mbtiChoices, enneagramChoices, zodiacChoices } = req.body;
   
+      // Find the user whose profile is being updated (current user)
+      const currentUser = await userProfile.findById(userId);
+  
+      if (!currentUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Check if target user exists
+      const targetUser = await userProfile.findById(targetUserId);
+  
+      if (!targetUser) {
+        return res.status(404).json({ error: 'Target user not found' });
+      }
+  
+      // Add choices to the arrays in the target user's profile
+      targetUser.mbti.push(...mbtiChoices);
+      targetUser.enneagram.push(...enneagramChoices);
+      targetUser.zodiac.push(...zodiacChoices);
+  
+      // Save the updated profile of the target user
+      await targetUser.save();
+  
+      res.status(200).json({ message: 'Profile choices updated successfully for the target user' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
