@@ -79,3 +79,28 @@ export const getCommentsByLikes = asyncHandler(async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+export const getCommentsByPersonalityType = asyncHandler(async (req, res) => {
+  try {
+    const { personalityType, specificType } = req.query;
+
+    // Validate personalityType and specificType
+    if (!personalityType || !specificType) {
+      return res.status(400).json({ error: 'Invalid request parameters.' });
+    }
+
+    // Fetch users based on the selected personality type and specific type
+    const users = await userProfile.find({ [personalityType]: specificType }, '_id');
+
+    // Extract user IDs from the users array
+    const userIds = users.map(user => user._id);
+
+    // Fetch comments made by users with the specified personality type and specific type
+    const comments = await userComment.find({ userId: { $in: userIds } });
+
+    return res.json(comments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+});
