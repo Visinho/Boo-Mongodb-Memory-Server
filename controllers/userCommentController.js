@@ -89,8 +89,11 @@ export const getCommentsByPersonalityType = asyncHandler(async (req, res) => {
       return res.status(400).json({ error: 'Invalid request parameters.' });
     }
 
-    // Fetch users based on the selected personality type and specific type
-    const users = await userProfile.find({ [personalityType]: specificType }, '_id');
+    // Create a case-insensitive regular expression for the specificType
+    const caseInsensitiveRegex = new RegExp(specificType, 'i');
+
+    // Fetch users based on the selected personality type and case-insensitive specific type
+    const users = await userProfile.find({ [personalityType]: caseInsensitiveRegex }, '_id');
 
     // Extract user IDs from the users array
     const userIds = users.map(user => user._id);
