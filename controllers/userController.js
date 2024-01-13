@@ -3,15 +3,15 @@ import asyncHandler from 'express-async-handler';
 
 export const createProfile = asyncHandler(async (req, res) => {
   try {
-    const { id, name, description, mbti, zodiac, enneagram, variant, tritype, socionics, sloan, psyche, image } = req.body;
-    
+    const { name, description, mbti, zodiac, enneagram, variant, tritype, socionics, sloan, psyche, image } = req.body;
+
     const newProfile = new userProfile({
       name,
       description,
-      mbti,
-      zodiac,
+      mbti: Array.isArray(mbti) ? mbti : [mbti],
+      zodiac: Array.isArray(zodiac) ? zodiac : [zodiac],
+      enneagram: Array.isArray(enneagram) ? enneagram : [enneagram],
       variant,
-      enneagram,
       tritype,
       socionics,
       sloan,
@@ -27,6 +27,7 @@ export const createProfile = asyncHandler(async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 export const getProfile = asyncHandler(async (req, res) => {
     try {
